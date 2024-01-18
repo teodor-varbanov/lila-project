@@ -1,0 +1,20 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+[remote "origin"]
+	url = https://github.com/teodor-varbanov/final-project.git/
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[submodule]
+	active = .
+[remote "origin"]
+	url = https://github.com/lichess-org/lila.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master
+[submodule "public/vendor/ChessPursuit"]
+	url = https://github.com/ornicar/ChessPursuit
+[submodule "public/vendor/shepherd"]
+	url = https://github.com/HubSpot/shepherd

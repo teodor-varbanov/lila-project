@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="broadcasts">Lähetykset</string>
+  <string name="myBroadcasts">Omat lähetykset</string>
+  <plurals name="nbBroadcasts">
+    <item quantity="one">%s lähetys</item>
+    <item quantity="other">%s lähetystä</item>
+  </plurals>
+  <string name="liveBroadcasts">Suorat lähetykset turnauksista</string>
+  <string name="newBroadcast">Uusi livelähetys</string>
+  <string name="aboutBroadcasts">Lähetyksistä</string>
+  <string name="noRoundsYet">Ei vielä kierroksia.</string>
+  <string name="howToUseLichessBroadcasts">Kuinka Lichess-lähetyksiä käytetään.</string>
+  <string name="theNewRoundHelp">Uudella kierroksella on samat jäsenet ja osallistujat kuin edellisellä.</string>
+  <string name="addRound">Lisää kierros</string>
+  <string name="ongoing">Käynnissä</string>
+  <string name="upcoming">Tulossa</string>
+  <string name="completed">Päättyneet</string>
+  <string name="completedHelp">Lichess tunnistaa lähteenä olevista peleistä, milloin kierros on viety päätökseen. Lähteen puuttuessa voit käyttää tätä asetusta.</string>
+  <string name="roundName">Kierroksen nimi</string>
+  <string name="roundNumber">Kierroksen numero</string>
+  <string name="tournamentName">Turnauksen nimi</string>
+  <string name="tournamentDescription">Turnauksen lyhyt kuvaus</string>
+  <string name="fullDescription">Täysimittainen kuvaus tapahtumasta</string>
+  <string name="fullDescriptionHelp">Ei-pakollinen pitkä kuvaus lähetyksestä. %1$s-muotoiluja voi käyttää. Pituus voi olla enintään %2$s merkkiä.</string>
+  <string name="sourceUrlOrGameIds">Lähteen URL-osoite tai peli ID:t</string>
+  <string name="sourceUrlHelp">URL, josta Lichess hakee PGN-päivitykset. Sen täytyy olla julkisesti saatavilla internetissä.</string>
+  <string name="gameIdsHelp">Vaihtoehtoisesti, voit syöttää jopa 64 Lichess peli ID:tä, erotettuna välilyönneillä.</string>
+  <string name="startDate">Alkamispäivämäärä omalla aikavyöhykkeelläsi</string>
+  <string name="startDateHelp">Ei-pakollinen, laita jos tiedät milloin tapahtuma alkaa</string>
+  <string name="credits">Mainitse lähde</string>
+  <string name="broadcastUrl">Lähetyksen URL</string>
+  <string name="currentRoundUrl">Tämän kierroksen URL</string>
+  <string name="currentGameUrl">Tämän pelin URL</string>
+  <string name="downloadAllRounds">Lataa kaikki kierrokset</string>
+  <string name="resetRound">Nollaa tämä kierros</string>
+  <string name="deleteRound">Poista tämä kierros</string>
+  <string name="definitivelyDeleteRound">Poista kierros ja sen pelit lopullisesti.</string>
+  <string name="deleteAllGamesOfThisRound">Poista kaikki tämän kierroksen pelit. Lähteen on oltava aktiivinen, jotta pelit voidaan luoda uudelleen.</string>
+  <string name="editRoundStudy">Kierrostutkielman muokkaus</string>
+  <string name="deleteTournament">Poista tämä turnaus</string>
+  <string name="definitivelyDeleteTournament">Poista lopullisesti koko turnaus, sen kaikki kierrokset ja kaikki pelit.</string>
+  <string name="automaticLeaderboard">Automaattinen tulostaulukko</string>
+  <string name="automaticLeaderboardHelp">Laske ja näytä yksinkertainen tulostaulukko pelien tulosten pohjalta</string>
+  <string name="replace">Valinnainen: korvaa pelaajien nimet, vahvuusluvut ja arvonimet</string>
+  <string name="replaceHelp">Yksi rivi pelaajaa kohden tässä muodossa:
+Alkuperäinen nimi; Korvaava nimi; Haluttaessa korvaava vahvuusluku; Haluttaessa korvaava arvonimi
+Esimerkki:
+DrNykterstein;Magnus Carlsen;2863
+AnishGiri;Anish Giri;2764;GM</string>
+  <string name="periodInSeconds">Jakso sekunteina</string>
+  <string name="periodInSecondsHelp">Tarvittaessa pyyntöjen välinen odotusaika: vähintään 2 s, enintään 60 s. Oletuksena on katsojien määrään perustuva automaattinen arvo.</string>
+</resources>

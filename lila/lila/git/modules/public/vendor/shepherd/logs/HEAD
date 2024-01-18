@@ -1,0 +1,2 @@
+0000000000000000000000000000000000000000 50845df9f0f0064ad855f90243b37fbbbb3079c6 root <root@localhost.localdomain> 1703872538 +0200	clone: from https://github.com/HubSpot/shepherd
+50845df9f0f0064ad855f90243b37fbbbb3079c6 e3ed0fcbf5c31137ece409d3ad6fea4e264ca1cc root <root@localhost.localdomain> 1703872538 +0200	checkout: moving from master to e3ed0fcbf5c31137ece409d3ad6fea4e264ca1cc

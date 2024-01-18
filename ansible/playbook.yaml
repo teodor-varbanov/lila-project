@@ -1,0 +1,91 @@
+---
+- hosts: localhost
+  gather_facts: no
+  become: yes
+
+  vars:
+    lila_name: "lila"
+    mongo_name: "mongo"
+    redis_name: "redis"
+    tag: "0.30"
+    front_port: "9663"
+    listener_port: "9664"
+    mongo_port: "27017"
+    redis_port: "6379"
+
+  tasks:
+    #- name: Include vault vars
+    #  ansible.builtin.include_vars:
+    #    file: secret.yaml
+        
+    #- name: Get latest application code from GitHub
+    #  git:
+    #    repo: https://github.com/teodor-varbanov/final-project.git
+    #    version: main
+    #    dest: ./
+    #    force: true
+    #  environment:
+    #    GIT_TERMINAL_PROMPT: 0 
+    
+    #- name: Log into DockerHub
+    #  docker_login:
+    #    username: dodo1845
+    #    password: "{{ docker_pass }}"
+
+    - name: Build Lila Front (w/ litener) image
+      docker_image:
+        name: "{{ lila_name }}:{{ tag }}"
+        source: build
+        build:
+          path: ./lila/
+        state: present
+      #  push: true
+      #  repository: dodo1845/dodohub 
+  
+    - name: Build MongoDB image
+      docker_image:
+        name: "{{ mongo_name }}:{{ tag }}"
+        source: build
+        build:
+          path: ./mongo/
+        state: present
+      #  push: true
+      #  repository: dodo1845/dodohub
+
+    - name: Build Redis image
+      docker_image:
+        name: "{{ redis_name }}:{{ tag }}"
+        source: build
+        build:
+          path: ./redis/
+        state: present
+      #  push: true
+      #  repository: dodo1845/dodohub
+
+    - name: Run Redis container
+      docker_container:
+        name: "{{ redis_name }}"
+        image: "{{ redis_name }}:{{ tag }}"
+        state: started
+        detach: true
+        ports:
+          - "{{ redis_port }}:{{ redis_port }}"
+
+    - name: Run MongoDB container
+      docker_container:
+        name: "{{ mongo_name }}"
+        image: "{{ mongo_name }}:{{ tag }}"
+        state: started
+        detach: true
+        ports:
+          - "{{ mongo_port }}:{{ mongo_port }}"
+
+    - name: Run Lila (front and listener) container
+      docker_container:
+        name: "{{ lila_name }}"
+        image: "{{ lila_name }}:{{ tag }}"
+        state: started
+        detach: true
+        ports:
+          - "{{ front_port }}:{{ front_port }}"
+          - "{{ listener_port }}:{{ listener_port }}"
