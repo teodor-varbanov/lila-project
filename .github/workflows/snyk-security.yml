@@ -10,6 +10,5 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}  
         with:
-          #args: --all-projects
           args: --all-projects --severity-threshold=critical
-        continue-on-error: true
+        # continue-on-error: true
