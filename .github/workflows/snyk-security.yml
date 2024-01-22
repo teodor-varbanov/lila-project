@@ -10,5 +10,4 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}  
         with:
-          file: /github/workspace/lila/project.json
-          json: true
+          args: --all-projects
