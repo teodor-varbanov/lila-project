@@ -7,31 +7,37 @@
     lila_name: "lila"
     mongo_name: "mongo"
     redis_name: "redis"
-    tag: "0.31"
+    tag: "0.50"
     front_port: "9663"
     listener_port: "9664"
     mongo_port: "27017"
     redis_port: "6379"
 
   tasks:
-    #- name: Include vault vars
-    #  ansible.builtin.include_vars:
-    #    file: secret.yaml
+    - name: Include vault vars
+      ansible.builtin.include_vars:
+        file: secret.yaml
         
     #- name: Get latest application code from GitHub
     #  git:
-    #    repo: https://github.com/teodor-varbanov/final-project.git
+    #    repo: https://github.com/teodor-varbanov/lila-project.git
     #    version: main
     #    dest: ./
     #    force: true
     #  environment:
     #    GIT_TERMINAL_PROMPT: 0 
     
-    #- name: Log into DockerHub
-    #  docker_login:
-    #    username: dodo1845
-    #    password: "{{ docker_pass }}"
+    - name: Log into DockerHub
+      docker_login:
+        username: dodo1845
+        password: "{{ docker_pass }}"
   
+    - name: Copy objects
+      ansible.builtin.copy:
+        src: /home/dodo/git
+        dest: ./lila/lila/git
+
+
     - name: Build MongoDB image
       docker_image:
         name: "{{ mongo_name }}:{{ tag }}"
@@ -39,8 +45,8 @@
         build:
           path: ./mongo/
         state: present
-      #  push: true
-      #  repository: dodo1845/dodohub
+        push: true
+        repository: dodo1845/dodohub
 
     - name: Build Redis image
       docker_image:
@@ -49,8 +55,8 @@
         build:
           path: ./redis/
         state: present
-      #  push: true
-      #  repository: dodo1845/dodohub
+        push: true
+        repository: dodo1845/dodohub
 
     - name: Run Redis container
       docker_container:
@@ -77,8 +83,8 @@
         build:
           path: ./lila/
         state: present
-      #  push: true
-      #  repository: dodo1845/dodohub 
+        push: true
+        repository: dodo1845/dodohub 
       
     - name: Run Lila (front and listener) container
       docker_container:
@@ -89,3 +95,7 @@
         ports:
           - "{{ front_port }}:{{ front_port }}"
           - "{{ listener_port }}:{{ listener_port }}"
+    - name: Delete objects 
+      ansible.builtin.file:
+        state: absent
+        path: ./lila/lila/git
