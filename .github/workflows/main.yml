@@ -11,4 +11,4 @@ jobs:
         sbt-version: 1.5.5
     - name: Run scalafmt
       run: sbt "scalafmt --config .scalafmt.conf --test"
-      working-directory: lila/lila
+      working-directory: lila/lila/.scalafmt.conf
