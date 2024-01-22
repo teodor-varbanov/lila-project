@@ -7,7 +7,7 @@
     lila_name: "lila"
     mongo_name: "mongo"
     redis_name: "redis"
-    tag: "0.50"
+    tag: "0.510"
     front_port: "9663"
     listener_port: "9664"
     mongo_port: "27017"
@@ -35,7 +35,7 @@
     - name: Copy objects
       ansible.builtin.copy:
         src: /home/dodo/git
-        dest: ./lila/lila/git
+        dest: ./lila/lila/
 
 
     - name: Build MongoDB image
