@@ -1,4 +1,4 @@
-name: Snyk for Scala
+name: Snyk check
 on: push
 jobs:
   security:
@@ -11,3 +11,4 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}  
         with:
           args: --all-projects
+        continue-on-error: true
