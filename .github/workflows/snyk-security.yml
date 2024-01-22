@@ -1,14 +1,14 @@
-name: Snyc for Scala
+name: Snyk for Scala
 on: push
 jobs:
   security:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Run Snyk to check IAC files for issues
+      - name: Run Snyk to check Scala
         uses: snyk/actions/scala@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}  
         with:
           file: /github/workspace/lila/project.json
-          sarif: true
+          json: true
