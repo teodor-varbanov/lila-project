@@ -161,8 +161,8 @@ object Modlog:
   val teamEdit            = "teamEdit"
   val appealPost          = "appealPost"
   val setKidMode          = "setKidMode"
-  val weakPassword        = "weakPassword"
-  val blankedPassword     = "blankedPassword"
+  val weakPassword        = "weakPassword" #gitleaks:allow
+  val blankedPassword     = "blankedPassword" #gitleaks:allow
   val ublogRankAdjust     = "ublogRankAdjust"
 
   private val explainRegex = """^[\w-]{3,}+: (.++)$""".r

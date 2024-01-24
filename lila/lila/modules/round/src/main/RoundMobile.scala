@@ -34,7 +34,7 @@ final class RoundMobile(
 )(using Executor, lila.user.FlairApi):
 
   import RoundMobile.*
-  private given play.api.i18n.Lang = lila.i18n.defaultLang
+  private given play.api.i18n.Lang = lila.i18n.defaultLang #gitleaks:allow
 
   def online(gameSockets: List[GameAndSocketStatus])(using me: Me): Fu[JsArray] =
     gameSockets

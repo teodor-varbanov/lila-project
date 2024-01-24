@@ -2468,8 +2468,8 @@ object I18nKeys:
   object keyboardMove:
     val `keyboardInputCommands` = I18nKey("keyboardMove:keyboardInputCommands")
     val `performAMove` = I18nKey("keyboardMove:performAMove")
-    val `movePieceFromE2ToE4` = I18nKey("keyboardMove:movePieceFromE2ToE4")
-    val `moveKnightToC3` = I18nKey("keyboardMove:moveKnightToC3")
+    val `movePieceFromE2ToE4` = I18nKey("keyboardMove:movePieceFromE2ToE4") #gitleaks:allow
+    val `moveKnightToC3` = I18nKey("keyboardMove:moveKnightToC3") #gitleaks:allow
     val `kingsideCastle` = I18nKey("keyboardMove:kingsideCastle")
     val `queensideCastle` = I18nKey("keyboardMove:queensideCastle")
     val `promoteC8ToQueen` = I18nKey("keyboardMove:promoteC8ToQueen")
