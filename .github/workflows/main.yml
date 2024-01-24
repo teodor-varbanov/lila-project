@@ -1,0 +1,23 @@
+name: CI/CD
+on: push
+jobs:
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run Snyk to check Scala
+        uses: snyk/actions/scala@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}  
+        with:
+          args: --all-projects --severity-threshold=critical
+        # continue-on-error: true
+        
+  gitleaks:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+        with: {fetch-depth: 0}
+
+      - name: Check for GitLeaks
+        uses: gacts/gitleaks@v1 

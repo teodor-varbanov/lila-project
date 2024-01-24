@@ -1,0 +1,14 @@
+on: [push]
+
+jobs:
+  secret-checker:
+    runs-on: ubuntu-latest
+    name: Credentials checker
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Check for vulnerabilities
+        id: checks
+        uses: maddygoround/secretduty@v1.3
+      - name: Get results of scan
+        run: echo "Scan Results - ${{ steps.checks.outputs.result }}"
