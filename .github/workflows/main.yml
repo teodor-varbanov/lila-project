@@ -21,3 +21,4 @@ jobs:
 
       - name: Check for GitLeaks
         uses: gacts/gitleaks@v1 
+        if: always()
