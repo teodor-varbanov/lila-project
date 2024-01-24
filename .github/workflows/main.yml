@@ -36,4 +36,4 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       with:
         #projectBaseDir: .
-        exclusions: '**/*.java'
+        sonar.exclusions: '**/*.java'
