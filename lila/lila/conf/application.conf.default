@@ -8,6 +8,6 @@ include "version"
 # net.ratelimit = false
 
 # change for additional encryption of password hashes
-user.password.bpass.secret = "9qEYN0ThHer1KWLNekA76Q==" #gitleaks:allow
+user.password.bpass.secret = "9qEYN0ThHer1KWLNekA76Q=="
 
 # override additional values from base.conf here
