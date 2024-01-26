@@ -3,7 +3,9 @@ name: CI to DockerHub
 on:
   push:
     paths:
-      - 'Dockerfile'
+      - './mongo/Dockerfile'
+      - './redis/Dockerfile'
+      - './lila/Dockerfile'
 
 jobs:
   build:
