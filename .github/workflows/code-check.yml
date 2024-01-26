@@ -34,3 +34,12 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  
+  Codacy-Analysis:
+      runs-on: ubuntu-latest
+      steps:
+      - name: Checkout code
+        uses: actions/checkout@main
+
+      - name: Run Codacy Analysis CLI
+        uses: codacy/codacy-analysis-cli-action@master
