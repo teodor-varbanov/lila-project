@@ -37,7 +37,7 @@ RUN npm i -g pnpm
 
 COPY lila ./lila
 
-# RUN mongosh mongodb://172.17.0.3:27017/lichess < lila/bin/mongodb/indexes.js
+RUN mongosh mongodb://172.17.0.3:27017/lichess < lila/bin/mongodb/indexes.js
 
 WORKDIR /lila
  
