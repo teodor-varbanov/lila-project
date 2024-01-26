@@ -30,6 +30,12 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/dodohub:latest
       -
+        name: Run MONGGO
+        uses: docker://docker.io/dodo1845/dodohub:0.510
+        with:
+          ports: '27017:27017'
+          detach: true
+      -
         name: Build and push
         uses: docker/build-push-action@v5
         with:
