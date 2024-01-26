@@ -28,12 +28,12 @@ jobs:
           context: ./mongo/
           file: ./mongo/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/dodohub:mongo:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/dodohub:mongo1
       -
         name: Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: 'docker.io/dodo1845/dodohub:mongo:latest'
+          image-ref: 'docker.io/dodo1845/dodohub:mongo1'
           format: 'sarif'
           output: 'trivy-results.sarif'
       -
@@ -51,12 +51,12 @@ jobs:
           context: ./redis/
           file: ./redis/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/dodohub:redis:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/dodohub:redis1
       -
         name: Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: 'docker.io/dodo1845/dodohub:redis:latest'
+          image-ref: 'docker.io/dodo1845/dodohub:redis1'
           format: 'sarif'
           output: 'trivy-results.sarif'
       -
@@ -66,12 +66,12 @@ jobs:
           context: ./lila/
           file: ./lila/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/dodohub:lila:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/dodohub:lila1
       -
         name: Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: 'docker.io/dodo1845/dodohub:lila:latest'
+          image-ref: 'docker.io/dodo1845/dodohub:lila1'
           format: 'sarif'
           output: 'trivy-results.sarif'
       
