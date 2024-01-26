@@ -4,9 +4,9 @@ on:
   push:
     branches: "*"
     paths:
-      - './mongo/Dockerfile'
-      - './redis/Dockerfile'
-      - './lila/Dockerfile'
+      - '/mongo/Dockerfile'
+      - '/redis/Dockerfile'
+      - '/lila/Dockerfile'
 
 jobs:
   build:
