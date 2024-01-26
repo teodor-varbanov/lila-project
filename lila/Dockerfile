@@ -37,11 +37,17 @@ RUN npm i -g pnpm
 
 COPY lila ./lila
 
-RUN mongosh mongodb://172.17.0.3:27017/lichess < lila/bin/mongodb/indexes.js
+# RUN mongosh mongodb://172.17.0.3:27017/lichess < lila/bin/mongodb/indexes.js
 
 WORKDIR /lila
+ 
+#Download git folder, needed for final BUILD 
 
+RUN curl -o git.zip https://lila-project.s3.eu-north-1.amazonaws.com/git.zip
+RUN apt install -y unzip
+RUN unzip ./git.zip
 RUN mv /lila/git /lila/.git
+
 RUN /lila/ui/build 
 
 COPY lila-ws ./lila-ws
