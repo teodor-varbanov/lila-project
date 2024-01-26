@@ -4,10 +4,7 @@ on:
   push:
     branches: "*"
     paths:
-      - '/mongo/Dockerfile'
-      - '/redis/Dockerfile'
-      - '/lila/Dockerfile'
-
+      - '*/Dockerfile'
 jobs:
   build:
     runs-on: ubuntu-latest
