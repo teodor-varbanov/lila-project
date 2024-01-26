@@ -2,6 +2,7 @@ name: CI to DockerHub
 
 on:
   push:
+    branches: "*"
     paths:
       - './mongo/Dockerfile'
       - './redis/Dockerfile'
