@@ -1,0 +1,34 @@
+name: Deploy locally
+on: push
+jobs:
+
+  Deploy: 
+    runs-on: self-hosted
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v4
+      -
+        name: Pull MONGO from Dockerhub
+        run: docker pull dodo1845/dodohub:mongo2
+      -
+        name: Pull REDIS from Dockerhub
+        run: docker pull dodo1845/dodohub:redis2
+      -
+        name: Pull LILA from Dockerhub
+        run: docker pull dodo1845/dodohub:lila2
+      -
+        name: STOP CONTAINERS IF ANY ARE RUNNING
+        run: docker ps -q | % { docker stop $_ }
+      -
+        name: REMOVE LEFTOVER CONTAINERS
+        run: docker ps -q | % { docker remove $_ }
+      -
+        name: Run REDIS container
+        run: docker run -d -p6379:6379 dodo1845/dodohub:redis2
+      -
+        name: Run MONGO container
+        run: docker run -d -p27017:27017 dodo1845/dodohub:mongo2
+      -
+        name: Run LILA container
+        run: docker run -d -p9663:9663 -p9664:9664 dodo1845/dodohub:lila2
