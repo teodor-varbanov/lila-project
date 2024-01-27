@@ -116,7 +116,7 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
   
   Pull-images: 
-    runs-on: self-hosted
+    runs-on: Windows
     steps:
       -
         name: Checkout
@@ -132,7 +132,7 @@ jobs:
         run: docker pull dodo1845/dodohub:lila2
         
   Run-images: 
-    runs-on: [self-hosted, windows]
+    runs-on: Windows
     steps:
       -
         name: STOP CONTAINERS IF ANY ARE RUNNING
