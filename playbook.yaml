@@ -28,14 +28,18 @@
       ansible.builtin.shell:
         dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
 
-    #- name: Install Docker 
+    - name: Install Docker 
       ansible.builtin.shell:
         dnf install -y docker-ce docker-ce-cli containerd.io
       
     - name: Start Docker 
       ansible.builtin.shell:
-        systemctl start docker 
-      #sudo systemctl enable docker
+        systemctl start docker
+
+    - name: Enable Docker 
+      ansible.builtin.shell:
+        systemctl enable docker 
+    
 
     - name: Build MongoDB image
       community.docker.docker_image:
