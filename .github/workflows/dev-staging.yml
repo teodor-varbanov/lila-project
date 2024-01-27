@@ -1,0 +1,59 @@
+name: DEV STAGING
+on:
+  push:
+    branches:
+      - 'feature'
+  
+jobs:
+
+  security:
+    runs-on: ubuntu-latest
+    steps:
+    
+      - uses: actions/checkout@v2
+      - name: Run Snyk to check Scala
+        uses: snyk/actions/scala@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}  
+        with:
+          args: --all-projects --severity-threshold=critical
+        
+  gitleaks:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+        with: {fetch-depth: 0}
+
+      - name: Check for GitLeaks
+        uses: gacts/gitleaks@v1 
+        if: always()
+        
+  sonarcloud:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - name: SonarCloud Scan
+      uses: sonarsource/sonarcloud-github-action@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  
+  Codacy-Analysis:
+      runs-on: ubuntu-latest
+      steps:
+      - name: Checkout code
+        uses: actions/checkout@main
+
+      - name: Run Codacy Analysis CLI
+        uses: codacy/codacy-analysis-cli-action@master
+        
+  Run-Ansible-Locally:
+      runs-on: lila-dev
+      steps:
+      - name: Change directory
+        run: cd /home/dodo/lila-project/
+
+      - name: Run Ansible playbook
+        run: ansible-playbook playbook.yaml --vault-pass-file /home/dodo/pass
