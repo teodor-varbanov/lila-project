@@ -28,7 +28,7 @@ jobs:
         name: Build and push Mongo
         uses: docker/build-push-action@v5
         with:
-          #context: ./mongo/
+          context: ./mongo/
           file: ./mongo/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/dodohub:mongo2
