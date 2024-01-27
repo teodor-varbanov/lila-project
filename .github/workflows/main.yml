@@ -13,7 +13,7 @@ jobs:
         run: docker pull dodo1845/dodohub:mongo2
       -
         name: Pull REDIS from Dockerhub
-        run: docker pull dodo1845/dodohub:redis22
+        run: docker pull dodo1845/dodohub:redis2
       -
         name: Pull LILA from Dockerhub
         run: docker pull dodo1845/dodohub:lila2
