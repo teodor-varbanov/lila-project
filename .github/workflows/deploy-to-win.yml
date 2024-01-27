@@ -1,8 +1,14 @@
 name: Deploy locally
-on: push
+on:
+  push:
+    branches:
+      - 'main'
+  pull_request:
+    types: [closed]
+    
 jobs:
 
-  Deploy: 
+  Pull-images: 
     runs-on: self-hosted
     steps:
       -
@@ -17,6 +23,10 @@ jobs:
       -
         name: Pull LILA from Dockerhub
         run: docker pull dodo1845/dodohub:lila2
+        
+  Run-images: 
+    runs-on: self-hosted
+    steps:
       -
         name: STOP CONTAINERS IF ANY ARE RUNNING
         run: docker ps -q | % { docker stop $_ }
