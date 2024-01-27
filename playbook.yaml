@@ -26,7 +26,6 @@
     #    force: true
     #  environment:
     #    GIT_TERMINAL_PROMPT: 0 
-    # test
     
     - name: Log into DockerHub
       docker_login:
