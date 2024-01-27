@@ -136,7 +136,7 @@ jobs:
     steps:
       -
         name: STOP CONTAINERS IF ANY ARE RUNNING
-        run: docker stop (docker ps -q)
+        run: docker ps -aq | % { docker stop $_ }
       -
         name: REMOVE LEFTOVER CONTAINERS
         run: docker container prune -f
