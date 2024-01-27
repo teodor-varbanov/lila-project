@@ -1,0 +1,19 @@
+name: Deploy locally
+on: push
+jobs:
+
+  Deploy: 
+    runs-on: self-hosted
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v4
+      -
+        name: Pull MONGO from Dockerhub
+        run: docker pull dodo1845/dodohub:mongo2
+      -
+        name: Pull REDIS from Dockerhub
+        run: docker pull dodo1845/dodohub:redis22
+      -
+        name: Pull LILA from Dockerhub
+        run: docker pull dodo1845/dodohub:lila2
