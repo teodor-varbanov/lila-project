@@ -52,6 +52,9 @@ jobs:
   Run-Ansible-Locally:
       runs-on: [self-hosted, lila-dev]
       steps:
-
-      - name: Run Ansible playbook
-        run: ansible-playbook /home/dodo/lila-project/playbook.yaml --vault-pass-file /home/dodo/pass
+      - name: Run Ansible Playbook
+        uses: dawidd6/action-ansible-playbook@v2
+        with:
+          playbook: /home/dodo/lila-project/ansible-playbook.yaml
+          options: --vault-pass-file /home/dodo/pass
+          
