@@ -7,7 +7,7 @@ on:
     types: [closed]
 jobs:
 
-  docker:
+  Docker-Scan-and-Push-Mongo:
     permissions:
       security-events: write # for github/codeql-action/upload-sarif to upload SARIF results
     runs-on: ubuntu-latest
@@ -25,7 +25,7 @@ jobs:
         name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
       -
-        name: Build and push
+        name: Build and push Mongo
         uses: docker/build-push-action@v5
         with:
           context: ./mongo/
@@ -33,7 +33,7 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/dodohub:mongo2
       -
-        name: Trivy vulnerability scanner
+        name: Trivy scan for Mongo
         uses: aquasecurity/trivy-action@master
         with:
           image-ref: 'docker.io/dodo1845/dodohub:mongo2'
@@ -49,8 +49,14 @@ jobs:
       -
         name: Run MONGO
         run: docker run -d -p 27017:27017 dodo1845/dodohub:mongo1
+        
+  Docker-Scan-and-Push-Redis:
+    permissions:
+      security-events: write # for github/codeql-action/upload-sarif to upload SARIF results
+    runs-on: ubuntu-latest
+    steps:
       -
-        name: Build and push
+        name: Build and push Redis
         uses: docker/build-push-action@v5
         with:
           context: ./redis/
@@ -58,14 +64,27 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/dodohub:redis2
       -
-        name: Trivy vulnerability scanner
+        name: Trivy scan for Redis
         uses: aquasecurity/trivy-action@master
         with:
           image-ref: 'docker.io/dodo1845/dodohub:redis2'
           format: 'sarif'
           output: 'trivy-results.sarif'
       -
-        name: Build and push
+        name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: 'trivy-results.sarif'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
+          
+  Docker-Scan-and-Push-Lila:
+    permissions:
+      security-events: write # for github/codeql-action/upload-sarif to upload SARIF results
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Build and push lila
         uses: docker/build-push-action@v5
         with:
           context: ./lila/
@@ -73,14 +92,21 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/dodohub:lila2
       -
-        name: Trivy vulnerability scanner
+        name: Trivy scan for Lila
         uses: aquasecurity/trivy-action@master
         with:
           image-ref: 'docker.io/dodo1845/dodohub:lila2'
           format: 'sarif'
           output: 'trivy-results.sarif'
+      -
+        name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: 'trivy-results.sarif'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
   
-  security:
+  SnykSecurity:
     runs-on: ubuntu-latest
     steps:
     
@@ -93,7 +119,7 @@ jobs:
           args: --all-projects --severity-threshold=critical
         # continue-on-error: true
         
-  gitleaks:
+  GitLeaks:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v3
@@ -103,7 +129,7 @@ jobs:
         uses: gacts/gitleaks@v1 
         if: always()
         
-  sonarcloud:
+  SonarCloud:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -115,11 +141,37 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
   
-  Codacy-Analysis:
-      runs-on: ubuntu-latest
-      steps:
-      - name: Checkout code
-        uses: actions/checkout@main
-
-      - name: Run Codacy Analysis CLI
-        uses: codacy/codacy-analysis-cli-action@master
+  Pull-images: 
+    runs-on: self-hosted
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v4
+      -
+        name: Pull MONGO from Dockerhub
+        run: docker pull dodo1845/dodohub:mongo2
+      -
+        name: Pull REDIS from Dockerhub
+        run: docker pull dodo1845/dodohub:redis2
+      -
+        name: Pull LILA from Dockerhub
+        run: docker pull dodo1845/dodohub:lila2
+        
+  Run-images: 
+    runs-on: self-hosted
+    steps:
+      -
+        name: STOP CONTAINERS IF ANY ARE RUNNING
+        run: docker stop (docker ps -q)
+      -
+        name: REMOVE LEFTOVER CONTAINERS
+        run: docker container prune -f
+      -
+        name: Run REDIS container
+        run: docker run -d -p6379:6379 dodo1845/dodohub:redis2
+      -
+        name: Run MONGO container
+        run: docker run -d -p27017:27017 dodo1845/dodohub:mongo2
+      -
+        name: Run LILA container
+        run: docker run -d -p9663:9663 -p9664:9664 dodo1845/dodohub:lila2
