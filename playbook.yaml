@@ -1,7 +1,7 @@
 ---
 - hosts: localhost
   gather_facts: no
-  become: yes
+  become: no
 
   vars:
     lila_name: "lila"
@@ -14,47 +14,47 @@
     redis_port: "6379"
 
   tasks:
-    - name: Include vault vars
-      ansible.builtin.include_vars:
-        file: secret.yaml
         
-    #- name: Get latest application code from GitHub
-    #  git:
-    #    repo: https://github.com/teodor-varbanov/lila-project.git
-    #    version: feature
-    #    dest: ./
-    #    force: true
-    #  environment:
-    #    GIT_TERMINAL_PROMPT: 0 
-    # test
-    
-    - name: Log into DockerHub
-      docker_login:
-        username: dodo1845
-        password: "{{ docker_pass }}"
+    - name: Get latest application code from GitHub
+      git:
+        repo: https://github.com/teodor-varbanov/lila-project.git
+        version: feature
+        dest: ./
+        force: true
+      environment:
+        GIT_TERMINAL_PROMPT: 0
+
+    - name: Add repo to DNF
+      ansible.builtin.shell:
+        dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
+
+    #- name: Install Docker 
+      ansible.builtin.shell:
+        dnf install -y docker-ce docker-ce-cli containerd.io
+      
+    - name: Start Docker 
+      ansible.builtin.shell:
+        systemctl start docker 
+      #sudo systemctl enable docker
 
     - name: Build MongoDB image
-      docker_image:
+      community.docker.docker_image:
         name: "{{ mongo_name }}:{{ tag }}"
         source: build
         build:
           path: ./mongo/
         state: present
-        push: false
-        repository: dodo1845/dodohub
 
     - name: Build Redis image
-      docker_image:
+      community.docker.docker_image:
         name: "{{ redis_name }}:{{ tag }}"
         source: build
         build:
           path: ./redis/
         state: present
-        push: false
-        repository: dodo1845/dodohub
 
     - name: Run Redis container
-      docker_container:
+      community.docker.docker_container:
         name: "{{ redis_name }}"
         image: "{{ redis_name }}:{{ tag }}"
         state: started
@@ -63,7 +63,7 @@
           - "{{ redis_port }}:{{ redis_port }}"
 
     - name: Run MongoDB container
-      docker_container:
+      community.docker.docker_container:
         name: "{{ mongo_name }}"
         image: "{{ mongo_name }}:{{ tag }}"
         state: started
@@ -72,17 +72,15 @@
           - "{{ mongo_port }}:{{ mongo_port }}"
           
     - name: Build Lila Front (w/ litener) image
-      docker_image:
+      community.docker.docker_image:
         name: "{{ lila_name }}:{{ tag }}"
         source: build
         build:
           path: ./lila/
         state: present
-        push: false
-        repository: dodo1845/dodohub 
       
     - name: Run Lila (front and listener) container
-      docker_container:
+      community.docker.docker_container:
         name: "{{ lila_name }}"
         image: "{{ lila_name }}:{{ tag }}"
         state: started
