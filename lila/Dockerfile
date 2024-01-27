@@ -55,6 +55,6 @@ COPY lila-ws ./lila-ws
 EXPOSE 9663
 EXPOSE 9664
 
-COPY /lila-entrypoint.sh /lila/lila-entrypoint.sh
+# COPY /lila-entrypoint.sh /lila/lila-entrypoint.sh
 
 ENTRYPOINT [ "bash", "/lila/lila-entrypoint.sh" ]
