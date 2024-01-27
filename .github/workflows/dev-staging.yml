@@ -50,10 +50,12 @@ jobs:
         uses: codacy/codacy-analysis-cli-action@master
         
   Run-Ansible-Locally:
-      runs-on: lila-dev
+      runs-on: [self-hosted, lila-dev]
       steps:
-      - name: Change directory
-        run: cd /home/dodo/lila-project/
-
-      - name: Run Ansible playbook
-        run: ansible-playbook playbook.yaml --vault-pass-file /home/dodo/pass
+      - name: Run Ansible Playbook
+        uses: dawidd6/action-ansible-playbook@v2
+        with:
+          playbook: playbook.yaml
+          directory: /home/dodo/lila-project/
+          options: --vault-pass-file /home/dodo/pass
+          
