@@ -61,7 +61,7 @@ jobs:
         name: Build and push lila
         uses: docker/build-push-action@v5
         with:
-          context: /lila/
+          context: ./lila/
           file: ./lila/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/dodohub:lila2
