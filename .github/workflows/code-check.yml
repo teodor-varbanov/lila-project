@@ -28,7 +28,7 @@ jobs:
         name: Build and push Mongo
         uses: docker/build-push-action@v5
         with:
-          context: ./mongo/
+          #context: ./mongo/
           file: ./mongo/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/dodohub:mongo2
@@ -59,7 +59,7 @@ jobs:
         name: Build and push Redis
         uses: docker/build-push-action@v5
         with:
-          context: ./redis/
+          #context: ./redis/
           file: ./redis/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/dodohub:redis2
@@ -87,7 +87,7 @@ jobs:
         name: Build and push lila
         uses: docker/build-push-action@v5
         with:
-          context: ./lila/
+          #context: ./lila/
           file: ./lila/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/dodohub:lila2
