@@ -55,7 +55,7 @@ jobs:
       - name: Run Ansible Playbook
         uses: dawidd6/action-ansible-playbook@v2
         with:
-          playbook: ansible-playbook.yaml
+          playbook: playbook.yaml
           directory: /home/dodo/lila-project/
           options: --vault-pass-file /home/dodo/pass
           
