@@ -6,7 +6,7 @@ on:
   
 jobs:
 
-  security:
+  SnykSecurity:
     runs-on: ubuntu-latest
     steps:
     
@@ -18,7 +18,7 @@ jobs:
         with:
           args: --all-projects --severity-threshold=critical
         
-  gitleaks:
+  GitLeaks:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v3
@@ -28,7 +28,7 @@ jobs:
         uses: gacts/gitleaks@v1 
         if: always()
         
-  sonarcloud:
+  SonarCloud:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -39,17 +39,9 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-  
-  Codacy-Analysis:
-      runs-on: ubuntu-latest
-      steps:
-      - name: Checkout code
-        uses: actions/checkout@main
-
-      - name: Run Codacy Analysis CLI
-        uses: codacy/codacy-analysis-cli-action@master
         
   Run-Ansible-Locally:
+      needs: [SnykSecurity, SonarCloud]
       runs-on: [self-hosted, lila-dev]
       steps:
       - name: Run Ansible Playbook
