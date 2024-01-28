@@ -31,17 +31,17 @@ jobs:
           context: ./mongo/
           file: ./mongo/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/dodohub:{{ var.MONGO }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/dodohub:${{ var.MONGO }}
       -
         name: Trivy scan for Mongo
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: 'docker.io/dodo1845/dodohub:{{ var.MONGO }}'
+          image-ref: 'docker.io/dodo1845/dodohub:${{ var.MONGO }}'
           format: 'sarif'
           output: 'trivy-results.sarif'
       -
         name: Run MONGO
-        run: docker run -d -p 27017:27017 dodo1845/dodohub:{{ var.MONGO }}
+        run: docker run -d -p 27017:27017 dodo1845/dodohub:${{ var.MONGO }}
       -
         name: Build and push Redis
         uses: docker/build-push-action@v5
@@ -49,12 +49,12 @@ jobs:
           context: ./redis/
           file: ./redis/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/dodohub:{{ var.REDIS }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/dodohub:${{ var.REDIS }}
       -
         name: Trivy scan for Redis
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: 'docker.io/dodo1845/dodohub:{{ var.REDIS }}'
+          image-ref: 'docker.io/dodo1845/dodohub:${{ var.REDIS }}'
           format: 'sarif'
           output: 'trivy-results.sarif'
       -
@@ -64,12 +64,12 @@ jobs:
           context: ./lila/
           file: ./lila/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/dodohub:{{ var.LILA }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/dodohub:${{ var.LILA }}
       -
         name: Trivy scan for Lila
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: 'docker.io/dodo1845/dodohub: {{ var.LILA }}'
+          image-ref: 'docker.io/dodo1845/dodohub:${{ var.LILA }}'
           format: 'sarif'
           output: 'trivy-results.sarif'
       -
@@ -126,13 +126,13 @@ jobs:
         uses: actions/checkout@v4
       -
         name: Pull MONGO from Dockerhub
-        run: docker pull dodo1845/dodohub:{{ var.MONGO }}
+        run: docker pull dodo1845/dodohub:${{ var.MONGO }}
       -
         name: Pull REDIS from Dockerhub
-        run: docker pull dodo1845/dodohub:{{ var.REDIS }}
+        run: docker pull dodo1845/dodohub:${{ var.REDIS }}
       -
         name: Pull LILA from Dockerhub
-        run: docker pull dodo1845/dodohub:{{ var.LILA }}
+        run: docker pull dodo1845/dodohub:${{ var.LILA }}
         
   Run-images: 
     needs: Pull-images
@@ -146,10 +146,10 @@ jobs:
         run: docker container prune -f
       -
         name: Run REDIS container
-        run: docker run -d -p6379:6379 dodo1845/dodohub:{{ var.REDIS }}
+        run: docker run -d -p6379:6379 dodo1845/dodohub:${{ var.REDIS }}
       -
         name: Run MONGO container
-        run: docker run -d -p27017:27017 dodo1845/dodohub:{{ var.MONGO }}
+        run: docker run -d -p27017:27017 dodo1845/dodohub:${{ var.MONGO }}
       -
         name: Run LILA container
-        run: docker run -d -p9663:9663 -p9664:9664 dodo1845/dodohub:{{ var.LILA }}
+        run: docker run -d -p9663:9663 -p9664:9664 dodo1845/dodohub:${{ var.LILA }}
