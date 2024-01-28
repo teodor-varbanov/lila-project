@@ -18,15 +18,17 @@ jobs:
         with:
           args: --all-projects --severity-threshold=critical
         
-  GitLeaks:
-    runs-on: ubuntu-20.04
+  Truffle-HOG-Secret-Scan:
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-        with: {fetch-depth: 0}
-
-      - name: Check for GitLeaks
-        uses: gacts/gitleaks@v1 
-        if: always()
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    - name: Secret Scanning
+      uses: trufflesecurity/trufflehog@main
+      with:
+        extra_args: --only-verified
         
   SonarCloud:
     runs-on: ubuntu-latest
@@ -41,7 +43,7 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         
   Run-Ansible-Locally:
-      needs: [SnykSecurity, SonarCloud]
+      needs: [SnykSecurity, SonarCloud, Truffle-HOG-Secret-Scan]
       runs-on: [self-hosted, lila-dev]
       steps:
       - name: Run Ansible Playbook
