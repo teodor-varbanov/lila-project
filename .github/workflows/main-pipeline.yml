@@ -93,24 +93,7 @@ jobs:
           args: --all-projects --severity-threshold=critical
         # continue-on-error: true
         
-  GitLeaks:
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: actions/checkout@v3
-        with: {fetch-depth: 0}
-
-      - name: Check for GitLeaks
-        uses: gacts/gitleaks@v1 
-        if: always()
-
-  Secret-scan:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: max/secret-scan@master
-        with:
-          exclude_path: 'lila/lila/*'
-  Truffle-HOG:
+  Truffle-HOG-Secret-Scan:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
@@ -135,7 +118,7 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
   
   Pull-images:
-    needs: [Scan-and-Push-Containers, SnykSecurity]
+    needs: [Scan-and-Push-Containers, SnykSecurity, Truffle-HOG-Secret-Scan]
     runs-on: Windows
     steps: 
       -
