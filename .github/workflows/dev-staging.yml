@@ -43,7 +43,7 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         
   Run-Ansible-Locally:
-      needs: [SnykSecurity, SonarCloud]
+      needs: [SnykSecurity, SonarCloud, Truffle-HOG-Secret-Scan]
       runs-on: [self-hosted, lila-dev]
       steps:
       - name: Run Ansible Playbook
