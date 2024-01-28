@@ -102,7 +102,20 @@ jobs:
       - name: Check for GitLeaks
         uses: gacts/gitleaks@v1 
         if: always()
-        
+  
+  secret-checker:
+    runs-on: ubuntu-latest
+    name: Vulnerabilities check
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Check for vulnerabilities
+        id: checks
+        uses: maddygoround/secretduty@v1.3
+        with:
+          severity: "['CRITICAL']"
+      - name: Get results of scan
+        run: echo "Scan Results - ${{ steps.checks.outputs.result }}"      
   SonarCloud:
     runs-on: ubuntu-latest
     steps:
